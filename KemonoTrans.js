@@ -1,6 +1,7 @@
 // ==UserScript==
 // @name            Kemono跳转-e
 // @description     在一些特定网站添加跳转至kemono按钮
+// @version         1.0.0
 // @author          Ealvn
 // @license         MIT
 // @match           https://*.pixiv.net/*
