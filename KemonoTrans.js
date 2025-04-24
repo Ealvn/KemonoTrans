@@ -14,6 +14,7 @@
 // @grant           GM_setValue
 // @grant           GM_registerMenuCommand
 // @grant           GM_unregisterMenuCommand
+// @namespace https://greasyfork.org/users/1377032
 // ==/UserScript==
 
 
