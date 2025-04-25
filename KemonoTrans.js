@@ -1,12 +1,13 @@
 // ==UserScript==
 // @name            Kemono跳转-e
 // @description     在一些特定网站添加跳转至kemono按钮
-// @version         1.0.0
+// @version         1.0.1
 // @author          Ealvn
 // @license         MIT
 // @match           https://*.pixiv.net/*
 // @match           https://*.dlsite.com/*/RG*.html
 // @match           https://*.fantia.jp/fanclubs/*
+// @match           https://*.fantia.jp/posts/*
 // @match           https://*.fanbox.cc/*
 // @match           https://*.patreon.com/user?u=*
 // @icon            https://kemono.party/static/favicon.ico
@@ -145,6 +146,7 @@ async function getKemonoUrl(url, domain) {
     const pixiv_user = /https:\/\/www\.pixiv\.net\/users\/(\d+)/i;
     const pixiv_artworks = /https:\/\/www\.pixiv\.net\/artworks\/(\d+)/i;
     const fantia_user = /https:\/\/fantia\.jp\/fanclubs\/(\d+)(\/posts(\S+))?/i;
+    const fantia_post = /https:\/\/fantia\.jp\/posts\/(\d+)?/i;
     const fanbox_user1 = /https:\/\/www\.fanbox\.cc\/@([^/]+)(\/posts\/(\d+))?/i;
     const fanbox_user2 = /https:\/\/(.+)\.fanbox\.cc(\/posts\/(\d+))?/i;
     const fanbox_post = /https:\/\/(.+)\.fanbox\.cc\/posts\/(\d+)"/i;
@@ -165,10 +167,14 @@ async function getKemonoUrl(url, domain) {
         service = "fanbox";
         var a_element = document.querySelector("div.sc-d91e2d15-1>a");
         var artist = a_element.getAttribute("data-gtm-value");
-        var intro = document.querySelector("div.sc-a2ee6855-5").innerHTML;
-        console.log(intro);
-        if (fanbox_post.test(intro)) {
-            post = intro.match(fanbox_post)[2]
+        try{
+            var intro = document.querySelector("div.sc-a2ee6855-5").innerHTML;
+            console.log(intro);
+            if (fanbox_post.test(intro)) {
+                post = intro.match(fanbox_post)[2]
+            }
+        }catch (e) {
+            console.log(e);
         }
         if (artist) {
             id = artist
@@ -178,17 +184,23 @@ async function getKemonoUrl(url, domain) {
         }
     } else if (fantia_user.test(url)) {
         //fantia
-        service = "fantia"
-        id = url.match(fantia_user)[1]
-    } else if (dlsite_user.test(url)) {
-        service = "dlsite"
-        id = url.match(dlsite_user)[1]
+        service = "fantia";
+        id = url.match(fantia_user)[1];
+    } else if (fantia_post.test(url)) {
+        service = "fantia";
+        post = url.match(fantia_post)[1];
+        var u_element = document.querySelector("div.fanclub-header>a").getAttribute("href");
+        id = u_element.toString().split("/").pop();
+    
+    }else if (dlsite_user.test(url)) {
+        service = "dlsite";
+        id = url.match(dlsite_user)[1];
     } else if (fanbox_user1.test(url) || fanbox_user2.test(url)) {
         //fanbox
-        service = "fanbox"
+        service = "fanbox";
         let matches = fanbox_user1.test(url) ? url.match(fanbox_user1) : url.match(fanbox_user2);
-        id = (await getFanbox(matches[1])).body.user.userId
-        post = matches[3]
+        id = (await getFanbox(matches[1])).body.user.userId;
+        post = matches[3];
     } else if (patreon_user1.test(url)) {
         // patreon
         service = "patreon"
