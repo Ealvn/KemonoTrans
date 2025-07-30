@@ -10,7 +10,7 @@
 // @match           https://*.fantia.jp/posts/*
 // @match           https://*.fanbox.cc/*
 // @match           https://*.patreon.com/user?u=*
-// @icon            https://kemono.party/static/favicon.ico
+// @icon            https://kemono.cr/static/favicon.ico
 // @grant           GM_getValue
 // @grant           GM_setValue
 // @grant           GM_registerMenuCommand
@@ -35,12 +35,12 @@
         openInNewId = GM_registerMenuCommand(`[${openInNew ? "✔" : "✖"}]新建标签页打开`, openInNew_callback);
     }
 
-    var domain = GM_getValue('Domain', 'kemono.party');
+    var domain = GM_getValue('Domain', 'kemono.cr');
 
     let domainId = GM_registerMenuCommand(`当前域名：${domain}`, domain_callback);
 
     function domain_callback() {
-        var result = prompt(language === 'zh-CN' ? '请输入域名, 例如kemono.su' : 'Please enter the domain name, for example kemono.su', domain);
+        var result = prompt(language === 'zh-CN' ? '请输入域名, 例如kemono.cr' : 'Please enter the domain name, for example kemono.cr', domain);
         if (!result) return;
         domain = result;
         GM_setValue('Domain', domain);
