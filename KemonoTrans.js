@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name            Kemono跳转-e
 // @description     在一些特定网站添加跳转至kemono按钮
-// @version         1.0.2
+// @version         1.0.3
 // @author          Ealvn
 // @license         MIT
 // @match           https://*.pixiv.net/*
@@ -165,7 +165,7 @@ async function getKemonoUrl(url, domain) {
     } else if (pixiv_artworks.test(url)) {
         //pixiv artworks
         service = "fanbox";
-        var a_element = document.querySelector("div.sc-d91e2d15-1>a");
+        var a_element = document.querySelector("div.sc-45d4878c-1>a");
         var artist = a_element.getAttribute("data-gtm-value");
         try{
             var intro = document.querySelector("div.sc-a2ee6855-5").innerHTML;
