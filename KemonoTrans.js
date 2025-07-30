@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name            Kemono跳转-e
 // @description     在一些特定网站添加跳转至kemono按钮
-// @version         1.0.3
+// @version         1.0.4
 // @author          Ealvn
 // @license         MIT
 // @match           https://*.pixiv.net/*
@@ -16,6 +16,8 @@
 // @grant           GM_registerMenuCommand
 // @grant           GM_unregisterMenuCommand
 // @namespace https://greasyfork.org/users/1377032
+// @downloadURL https://update.greasyfork.org/scripts/533873/Kemono%E8%B7%B3%E8%BD%AC-e.user.js
+// @updateURL https://update.greasyfork.org/scripts/533873/Kemono%E8%B7%B3%E8%BD%AC-e.meta.js
 // ==/UserScript==
 
 
@@ -165,10 +167,10 @@ async function getKemonoUrl(url, domain) {
     } else if (pixiv_artworks.test(url)) {
         //pixiv artworks
         service = "fanbox";
-        var a_element = document.querySelector("div.sc-45d4878c-1>a");
+        var a_element = document.querySelector("div.sc-8f427104-1>a");
         var artist = a_element.getAttribute("data-gtm-value");
         try{
-            var intro = document.querySelector("div.sc-a2ee6855-5").innerHTML;
+            var intro = document.querySelector("div.sc-45d4878c-1").innerHTML;
             console.log(intro);
             if (fanbox_post.test(intro)) {
                 post = intro.match(fanbox_post)[2]
